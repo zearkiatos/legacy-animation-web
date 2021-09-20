@@ -1,4 +1,5 @@
 import { without } from "lodash";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import React, { Component } from "react";
 import Faker from "faker";
 
@@ -19,25 +20,38 @@ class App extends Component {
   }
 
   renderQuotes() {
-      return this.state.quotes.map((item, index) => {
-        return (
-            <li className="list-group-item" key={item}>
-                {item}
-                <button onClick={this.onRemoveClick.bind(this, item)} className="remove btn btn-danger">Remove</button>
-            </li>
-        )
-      })
+    console.log(this.state.quotes);
+    return this.state.quotes.map((item, index) => {
+      return (
+        <li className="list-group-item" key={item}>
+          {item}
+          <button
+            onClick={this.onRemoveClick.bind(this, item)}
+            className="remove btn btn-danger"
+          >
+            Remove
+          </button>
+        </li>
+      );
+    });
   }
 
   render() {
-      return (
-        <div>
-            <button onClick={this.onAddClick.bind(this)}>Add</button>
-            <ul className="list-group">
-                {this.renderQuotes()}
-            </ul>
-        </div>
-      );
+    const transitionOptions = {
+      transitionName: "fade",
+      transitionEnterTimeout: 500,
+      transitionLeaveTimeout: 500,
+    };
+    return (
+      <div>
+        <button onClick={this.onAddClick.bind(this)}>Add</button>
+        <ul className="list-group">
+          <ReactCSSTransitionGroup {...transitionOptions}>
+            {this.renderQuotes()}
+          </ReactCSSTransitionGroup>
+        </ul>
+      </div>
+    );
   }
 }
 
