@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: legacy-animation-web
+    env_file: 
+      - .env
+    volumes: 
+      - ".:/app"
+    ports:
+      - "0.0.0.0:8080:8080"
